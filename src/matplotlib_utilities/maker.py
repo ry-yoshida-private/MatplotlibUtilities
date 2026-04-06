@@ -1,4 +1,5 @@
-from cProfile import label
+# pyright: reportUnknownMemberType=false
+
 import numpy as np
 import gc
 import matplotlib.pyplot as plt
@@ -11,9 +12,7 @@ from mpl_toolkits.axes_grid1.axes_divider import AxesDivider
 
 from .utils import (
     SubplotIndex,
-    RowColumnIndex,
-    ColorMap,
-
+    RowColumnIndex    
     )
 from .layout import GraphLayout
 from .parameter import GraphParameters
@@ -81,17 +80,17 @@ class MatplotGraphMaker:
         is_showing_result_enabled: bool = True
             Whether to show the result.
         """
-        plt.subplots_adjust(
-            wspace=self.parameters.w_space, 
-            hspace=self.parameters.h_space
-            )
+        self.fig.subplots_adjust(
+            wspace=self.parameters.w_space,
+            hspace=self.parameters.h_space,
+        )
         if save_path is not None:
-            plt.savefig(save_path, bbox_inches='tight')
-        
+            self.fig.savefig(save_path, bbox_inches="tight")
+
         if is_showing_result_enabled:
-            plt.show()
+            self.fig.show()
         else:
-            plt.close()
+            plt.close(self.fig)
             gc.collect()
 
     def set_colorbar(
@@ -106,7 +105,8 @@ class MatplotGraphMaker:
         Parameters
         ----------
         index: SubplotIndex | None = None
-            The index of the subplot. If None, the colorbar will be added to the entire figure.
+            The index of the subplot. If None, the colorbar is anchored from the first subplot
+            (same figure; use when a single shared colorbar is intended).
         image: np.ndarray | None = None
             The image data to determine the colorbar scale from.
             If None, vmin and vmax must be specified in subparams.
@@ -115,11 +115,15 @@ class MatplotGraphMaker:
         """
         subparams = subparams or ColorbarParameters()
         sm: ScalarMappable = subparams.create_scalar_mappable(image)
-        ax: Axes | None = None if index is None else self._access_subplot(index=index)
+        ax: Axes = (
+            self.ax.flat[0]
+            if index is None
+            else self._access_subplot(index=index)
+        )
 
         divider: AxesDivider = make_axes_locatable(ax)
         cax: Axes = subparams.create_cax(divider=divider)
-        cbar: Colorbar = plt.colorbar(sm, cax=cax)
+        cbar: Colorbar = self.fig.colorbar(sm, cax=cax)
         if subparams.label is not None:
             cbar.set_label(subparams.label)
 
@@ -193,16 +197,15 @@ class MatplotGraphMaker:
         subplot.plot(x, y, **subparams.to_dict)
 
     def scatter(
-        self, 
-        x: np.ndarray, 
+        self,
+        x: np.ndarray,
         y: np.ndarray,
         index: SubplotIndex,
-        confidences: np.ndarray | None = None,
-        subparams: ScatterParameters | None = None
-        ) -> None:
+        subparams: ScatterParameters | None = None,
+    ) -> None:
         """
         Scatter the data on the subplot.
-        
+
         Parameters
         ----------
         x: np.ndarray
@@ -211,29 +214,21 @@ class MatplotGraphMaker:
             The y values of the data.
         index: SubplotIndex
             The index of the subplot.
-        confidences: np.ndarray | None = None
-            The confidences of the data.
         subparams: ScatterParameters | None = None
-            The subparameters for the scatter plot.
+            The subparameters for the scatter plot (including *s* for marker area,
+            per matplotlib ``scatter``).
         """
         subparams = subparams or ScatterParameters()
         subplot = self._access_subplot(index=index)
-        scatter_kwargs = subparams.to_dict.copy()
-        if confidences is not None:
-            scatter_kwargs["c"] = confidences
-        subplot.scatter(
-            x=x, 
-            y=y, 
-            **scatter_kwargs
-            )
+        subplot.scatter(x=x, y=y, **subparams.to_dict)
 
-    def imscatter(self):
+    def imscatter(self) -> None:
         raise NotImplementedError("Not implemented yet.")
 
-    def hist(self):
+    def hist(self) -> None:
         raise NotImplementedError("Not implemented yet.")
     
-    def bar(self):
+    def bar(self) -> None:
         raise NotImplementedError("Not implemented yet.")
 
     def legend(
@@ -288,7 +283,7 @@ class MatplotGraphMaker:
         ----------
         lower: float
             The lower limit.
-        upper: floatgetattr(subplot, attribute)(lower, upper)
+        upper: float
             The upper limit.
         index: SubplotIndex
             The index of the subplot.
@@ -311,8 +306,12 @@ class MatplotGraphMaker:
         """
         subparams = subparams or LineParameters()
         subplot = self._access_subplot(index=index)
-        attribute = orientation.ax_line_attribute
-        getattr(subplot, attribute)(x=value, **subparams.to_dict)
+        draw = getattr(subplot, orientation.ax_line_attribute)
+        match orientation:
+            case Orientation.VERTICAL:
+                draw(x=value, **subparams.to_dict)
+            case Orientation.HORIZONTAL:
+                draw(y=value, **subparams.to_dict)
 
     def get_subplot_index_from_number(
         self, 
@@ -379,76 +378,9 @@ class MatplotGraphMaker:
         row = self.layout.row
         column = self.layout.column
         plt.rcParams["font.size"] = self.parameters.font_size
-        fig, ax = plt.subplots(
-            row, 
-            column, 
-            dpi=self.parameters.dpi, 
-            figsize=self.parameters.figsize, 
-            squeeze=False
-            )   
+        fig = plt.figure(
+            dpi=self.parameters.dpi,
+            figsize=self.parameters.figsize,
+        )
+        ax = fig.subplots(nrows=row, ncols=column, squeeze=False)
         return fig, ax
-
-
-#######################################################
-
-def main():
-    import numpy as np
-    
-    from .parameter import GraphParameters
-    from .maker import MatplotGraphMaker
-    from .graph_axis import GraphAxis
-    from .layout import GraphLayout
-    from .utils import (
-        SubplotNumber,
-        RowColumnIndex,
-        SubplotIndex,
-        SubplotNumber,
-        )
-    from .table_axis import TableAxis
-
-    num_graph = 4
-
-    layout = GraphLayout.from_number(
-        number=num_graph,
-        axis=TableAxis.COLUMN,
-        axis_value=num_graph // 2
-        )
-    params = GraphParameters()
-    graph_maker = MatplotGraphMaker(
-        layout=layout,
-        parameters=params
-        )
-    
-    x1 = np.random.randn(100)
-    y1 = np.random.randn(100)
-    confidences = np.random.rand(100) 
-    index = graph_maker.get_subplot_index_from_number(number=0)
-    graph_maker.scatter(
-        index=index,
-        x=x1,
-        y=y1,
-        confidences=confidences
-        )
-    graph_maker.set_label(
-        label="x",
-        index=SubplotNumber(number=0, row_index=0),
-        axis=GraphAxis.X
-        )
-    index = graph_maker.get_subplot_index_from_number(number=1)
-    graph_maker.plot(
-        index=index,
-        x=x1,
-        y=y1,
-        subparams=None
-        )
-    graph_maker.draw_line(
-        value=0.5,
-        orientation=Orientation.VERTICAL,
-        index=graph_maker.get_subplot_index_from_number(number=1),
-        subparams=LineParameters(
-            color="red"
-            )
-        )
-
-if __name__ == "__main__":
-    main()

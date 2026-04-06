@@ -17,9 +17,8 @@ class GraphParameters:
         The height of the space between the subplots.
     dpi: int
         The resolution of the image.
-    figsize: tuple
+    figsize: tuple[float, float]
         The size of the figure.
-
     aspect_ratio: float
         The aspect ratio(height/width) of the figure.
     max_image_size: tuple[int, int]

@@ -22,6 +22,11 @@ class SubplotNumber:
     def column(self) -> int:
         """
         Get the column index of the subplot.
+
+        Returns
+        -------
+        int:
+            The column index of the subplot.
         """
         return self.number // (self.row_index + 1)
 
@@ -29,5 +34,10 @@ class SubplotNumber:
     def tuple(self) -> tuple[int, int]:
         """
         Get the tuple of the row and column.
+        
+        Returns
+        -------
+        tuple[int, int]:
+            The tuple of the row index and column index.
         """
         return self.row_index, self.column

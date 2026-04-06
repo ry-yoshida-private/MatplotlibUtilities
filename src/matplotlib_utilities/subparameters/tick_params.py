@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from .base_class import Subparameters
 
 @dataclass
-class TickParamsParameters:
+class TickParamsParameters(Subparameters):
     """
     Parameters for configuring tick marks and labels on matplotlib axes.
 
@@ -36,23 +37,3 @@ class TickParamsParameters:
     labelleft: bool = False
     labelright: bool = False
     labeltop: bool = False
-
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.pyplot.tick_params.
-
-        Returns:
-        --------
-        dict: A dictionary of the parameters for matplotlib.pyplot.tick_params.
-        """
-        return {
-            "bottom": self.bottom,
-            "left": self.left,
-            "right": self.right,
-            "top": self.top,
-            "labelbottom": self.labelbottom,
-            "labelleft": self.labelleft,
-            "labelright": self.labelright,
-            "labeltop": self.labeltop,
-            }

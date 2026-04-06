@@ -68,44 +68,7 @@ class ImshowParameters(Subparameters):
         """
         if self.alpha is not None and not (0 <= self.alpha <= 1):
             raise ValueError("alpha must be between 0 and 1")
-        if self.aspect is not None and not isinstance(self.aspect, (Aspect, float)):
-            raise ValueError("aspect must be Aspect enum or a float")
-        if self.origin is not None and not isinstance(self.origin, Origin):
-            raise ValueError("origin must be Origin enum")
         if self.filterrad <= 0:
             raise ValueError("filterrad must be greater than 0")
         if self.extent is not None and len(self.extent) != 4:
             raise ValueError("extent must be a tuple of 4 floats: (left, right, bottom, top)")
-
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.pyplot.imshow.
-        """
-        result = {}
-        if self.cmap is not None:
-            result["cmap"] = self.cmap
-        if self.norm is not None:
-            result["norm"] = self.norm
-        if self.aspect is not None:
-            result["aspect"] = self.aspect.value if isinstance(self.aspect, Aspect) else self.aspect
-        if self.interpolation is not None:
-            result["interpolation"] = self.interpolation.value
-        if self.interpolation_stage is not None:
-            result["interpolation_stage"] = self.interpolation_stage.value
-        if self.alpha is not None:
-            result["alpha"] = self.alpha
-        if self.vmin is not None:
-            result["vmin"] = self.vmin
-        if self.vmax is not None:
-            result["vmax"] = self.vmax
-        if self.origin is not None:
-            result["origin"] = self.origin.value
-        if self.extent is not None:
-            result["extent"] = self.extent
-        result["filternorm"] = self.filternorm
-        result["filterrad"] = self.filterrad
-        result["resample"] = self.resample
-        if self.url is not None:
-            result["url"] = self.url
-        return result

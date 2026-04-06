@@ -1,7 +1,7 @@
-from dataclasses import dataclass, fields
-from typing import Sequence
+from dataclasses import dataclass, Field
+from typing import Any, Sequence
 import numpy as np
-from matplotlib.cm import ScalarMappable, get_cmap
+from matplotlib.cm import ScalarMappable
 from matplotlib.colors import Normalize, Colormap
 from matplotlib.ticker import Locator
 from matplotlib.ticker import Formatter
@@ -92,11 +92,11 @@ class ColorbarParameters(Subparameters):
     extend: ColorbarExtend = ColorbarExtend.NEITHER
     extendfrac: None | str | float | tuple[float, float] = None
     extendrect: bool = False
-    ticks: None | list | Locator = None
+    ticks: None | list[float] | Locator = None
     format: None | str | Formatter = None
     drawedges: bool = False
-    boundaries: None | Sequence = None
-    values: None | Sequence = None
+    boundaries: None | Sequence[float] = None
+    values: None | Sequence[float] = None
     spacing: ColorbarSpacing | None = None
 
     def __post_init__(self):
@@ -112,38 +112,23 @@ class ColorbarParameters(Subparameters):
         if self.pad is not None and (self.pad <= 0 or self.pad > 1):
             raise ValueError("pad must be between 0 and 1")
         if self.anchor is not None:
-            if not isinstance(self.anchor, tuple) or len(self.anchor) != 2:
-                raise ValueError("anchor must be a tuple of 2 floats")
-            if not all(isinstance(x, (int, float)) for x in self.anchor):
+            if len(self.anchor) != 2:
                 raise ValueError("anchor must be a tuple of 2 floats")
         if self.panchor is not None and isinstance(self.panchor, tuple):
             if len(self.panchor) != 2:
                 raise ValueError("panchor must be a tuple of 2 floats")
-            if not all(isinstance(x, (int, float)) for x in self.panchor):
-                raise ValueError("panchor must be a tuple of 2 floats")
         if self.extend not in [ColorbarExtend.NEITHER, ColorbarExtend.BOTH, ColorbarExtend.MIN, ColorbarExtend.MAX]:
             raise ValueError("extend must be ColorbarExtend enum")
         if self.extendfrac is not None:
-            if not isinstance(self.extendfrac, (float, str, tuple)):
-                raise ValueError("extendfrac must be a float, str, or tuple")
-            if isinstance(self.extendfrac, tuple):
-                if len(self.extendfrac) != 2:
-                    raise ValueError("extendfrac tuple must have 2 elements")
-                if not all(isinstance(x, (int, float)) for x in self.extendfrac):
-                    raise ValueError("extendfrac tuple must contain 2 floats")
+            if isinstance(self.extendfrac, tuple) and len(self.extendfrac) != 2:
+                raise ValueError("extendfrac tuple must have 2 elements")
         if self.extendrect and self.extend == ColorbarExtend.NEITHER:
             raise ValueError("extendrect can only be True if extend is not NEITHER")
-        if self.ticks is not None and not isinstance(self.ticks, (list, Locator)):
-            raise ValueError("ticks must be a list or Locator")
-        if self.format is not None and not isinstance(self.format, (str, Formatter)):
-            raise ValueError("format must be a str or Formatter")
         if self.drawedges and self.boundaries is None:
             raise ValueError("drawedges can only be True if boundaries is set")
         if self.boundaries is not None and self.values is not None:
             if len(self.boundaries) != len(self.values) + 1:
                 raise ValueError("boundaries must have a length 1 greater than values")
-        if self.spacing is not None and not isinstance(self.spacing, ColorbarSpacing):
-            raise ValueError("spacing must be ColorbarSpacing enum")
 
     def _get_vmin_vmax(
         self, 
@@ -231,34 +216,13 @@ class ColorbarParameters(Subparameters):
         Axes
             The colorbar axes.
         """
-        location = self.location.value if self.location is not None else "right"
+        location = self.location.value if self.location is not None else Location.RIGHT.value
         cax: Axes = divider.append_axes(
-            location,
+            loc=location,
             size=f"{self.fraction * 100}%",
             pad=self.pad
             )
         return cax
 
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.pyplot.colorbar.
-        Note: This is mainly for consistency with other Subparameters classes.
-        For colorbar, use create_scalar_mappable() instead.
-
-        Returns
-        -------
-        dict
-            The dictionary of the parameters.
-        """
-
-        out = {}
-        for f in fields(self):
-            val = getattr(self, f.name)
-            if val == f.default:
-                continue
-            if hasattr(val, 'value'):
-                out[f.name] = val.value
-            elif val is not None:
-                out[f.name] = val
-        return out
+    def _to_dict_skip_field(self, field: Field[Any], value: Any) -> bool:
+        return value == field.default

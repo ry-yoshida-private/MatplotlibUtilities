@@ -1,6 +1,11 @@
 from dataclasses import dataclass
+
+import numpy as np
+from numpy.typing import ArrayLike
+
 from .base_class import Subparameters
 from ..utils import Marker
+from ..utils.color_types import ScatterColorArg
 
 @dataclass
 class ScatterParameters(Subparameters):
@@ -9,57 +14,46 @@ class ScatterParameters(Subparameters):
     
     Attributes:
     ----------
-    s: float
-        The size of the points.
-    c: str | None
-        The color of the points.
+    s: float | ArrayLike | None
+        Marker area in points², scalar or one value per point (matplotlib *s*).
+        None omits *s* so matplotlib uses its default (``rcParams['lines.markersize'] ** 2``).
+    c: ScatterColorArg | None
+        Marker face color: a single color, one color per point, or a 1-D array of
+        scalars. Scalars are painted using *cmap* with optional *vmin* / *vmax*
+        (matplotlib *c*).
     alpha: float | None
-        The alpha of the points.
+        Opacity of the markers.
     marker: Marker
-        The marker of the points.
+        Marker style.
     cmap: str | None
-        The colormap of the points.
+        Registered colormap *name* (e.g. *viridis*) used only when *c* is numeric
+        data to map; ignored when *c* is already an explicit color or color array.
     linewidths: float | None
-        The linewidths of the points.
-    edgecolors: str | None
-        The edgecolors of the points.
+        Edge line width(s) of the markers.
+    edgecolors: ScatterColorArg | None
+        Marker edge colors; same kinds of values as *c* (matplotlib also accepts *face*).
     vmin: float | None
-        The vmin of the points.
+        Lower bound of the colormap when *c* is numeric; None uses the data minimum.
     vmax: float | None
-        The vmax of the points.
+        Upper bound of the colormap when *c* is numeric; None uses the data maximum.
     plotnonfinite: bool
-        Whether to plot non-finite values.
+        If True, plot points whose *c* value is non-finite; if False, they are dropped.
     """
-    s: float = 5
-    c: str | None = None
+    s: float | ArrayLike | None = None
+    c: ScatterColorArg | None = None
     alpha: float | None = None
     marker: Marker = Marker.POINT
     cmap: str | None = None
     linewidths: float | None = None
-    edgecolors: str | None = None
+    edgecolors: ScatterColorArg | None = None
     vmin: float | None = None
     vmax: float | None = None
     plotnonfinite: bool = False
 
     def __post_init__(self):
-        if self.s < 0:
-            raise ValueError("s must be greater than 0")
+        if self.s is not None:
+            s_arr = np.asarray(self.s, dtype=float)
+            if np.any(s_arr < 0):
+                raise ValueError("s must be non-negative")
         if self.alpha is not None and not (0 <= self.alpha <= 1):
             raise ValueError("alpha must be between 0 and 1")
-
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.pyplot.scatter.
-        """
-        return {
-            "s": self.s,
-            "c": self.c,
-            "alpha": self.alpha,
-            "marker": self.marker.value,
-            "cmap": self.cmap,
-            "linewidths": self.linewidths,
-            "edgecolors": self.edgecolors,
-            "vmin": self.vmin,
-            "vmax": self.vmax,
-            }

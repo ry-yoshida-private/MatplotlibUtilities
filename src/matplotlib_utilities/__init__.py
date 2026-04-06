@@ -6,11 +6,11 @@ from .layout import GraphLayout
 from .utils import (
     RowColumnIndex,
     SubplotNumber,
-    ColorMap,
     )
 from .graph_axis import GraphAxis
 from .subparameters import (
     # Parameters
+    PlotParameters,
     ScatterParameters,
     ImshowParameters,
     TickParamsParameters,
@@ -37,6 +37,7 @@ __all__ = [
     "GraphAxis",
     
     # subparameters
+    "PlotParameters",
     "ScatterParameters",
     "ImshowParameters",
     "TickParamsParameters",

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ..utils.color_types import MplColor
 from .base_class import Subparameters
 
 
@@ -10,8 +11,8 @@ class PlotParameters(Subparameters):
 
     Attributes:
     ----------
-    color: str | None
-        The color of the plot.
+    color: MplColor | None
+        The color of the plot (``color.ColorType`` forms plus matplotlib-only extras).
     linewidth: float | None
         The width of the lines.
     linestyle: str | None
@@ -22,9 +23,9 @@ class PlotParameters(Subparameters):
         The size of the markers.
     markeredgewidth: float | None
         The width of the marker edges.
-    markeredgecolor: str | None
+    markeredgecolor: MplColor | None
         The color of the marker edges.
-    markerfacecolor: str | None
+    markerfacecolor: MplColor | None
         The color of the marker faces.
     alpha: float | None
         The alpha of the plot.
@@ -42,14 +43,14 @@ class PlotParameters(Subparameters):
         Whether to antialias the plot.
     """
 
-    color: str | None = None
+    color: MplColor | None = None
     linewidth: float | None = None
     linestyle: str | None = None
     marker: str | None = None
     markersize: float | None = None
     markeredgewidth: float | None = None
-    markeredgecolor: str | None = None
-    markerfacecolor: str | None = None
+    markeredgecolor: MplColor | None = None
+    markerfacecolor: MplColor | None = None
     alpha: float | None = None
 
     # Labeling
@@ -63,30 +64,3 @@ class PlotParameters(Subparameters):
     solid_joinstyle: str | None = None
     drawstyle: str | None = None
     antialiased: bool | None = None
-
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.pyplot.plot.
-        """
-        return {
-            k: v
-            for k, v in {
-                "color": self.color,
-                "linewidth": self.linewidth,
-                "linestyle": self.linestyle,
-                "marker": self.marker,
-                "markersize": self.markersize,
-                "markeredgewidth": self.markeredgewidth,
-                "markeredgecolor": self.markeredgecolor,
-                "markerfacecolor": self.markerfacecolor,
-                "alpha": self.alpha,
-                "label": self.label,
-                "zorder": self.zorder,
-                "solid_capstyle": self.solid_capstyle,
-                "solid_joinstyle": self.solid_joinstyle,
-                "drawstyle": self.drawstyle,
-                "antialiased": self.antialiased,
-            }.items()
-            if v is not None
-        }

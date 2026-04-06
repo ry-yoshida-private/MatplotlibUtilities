@@ -5,11 +5,29 @@ from .index import (
     RowColumnIndex
     )
 from .color_map import ColorMap
+from .color_types import (
+    ColorType,
+    HexType,
+    HsvFloatType,
+    MplColor,
+    RgbFloatType,
+    RgbIntType,
+    RgbaIntType,
+    ScatterColorArg,
+)
 
 __all__ = [
     "Marker",
     "SubplotIndex",
     "SubplotNumber",
     "RowColumnIndex",
-    "ColorMap"
-    ]
+    "ColorMap",
+    "ColorType",
+    "HexType",
+    "HsvFloatType",
+    "MplColor",
+    "RgbFloatType",
+    "RgbIntType",
+    "RgbaIntType",
+    "ScatterColorArg",
+]

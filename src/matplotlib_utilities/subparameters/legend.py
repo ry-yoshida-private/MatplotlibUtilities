@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from ..utils.color_types import MplColor
 from .base_class import Subparameters
 
 
@@ -26,9 +27,9 @@ class LegendParameters(Subparameters):
         Whether to draw a shadow behind the legend.
     framealpha: float | None
         The alpha transparency of the legend's background.
-    facecolor: str | None
+    facecolor: MplColor | None
         The legend's background color.
-    edgecolor: str | None
+    edgecolor: MplColor | None
         The legend's background patch edge color.
     title: str | None
         The legend's title.
@@ -44,31 +45,7 @@ class LegendParameters(Subparameters):
     fancybox: bool | None = None
     shadow: bool | None = None
     framealpha: float | None = None
-    facecolor: str | None = None
-    edgecolor: str | None = None
+    facecolor: MplColor | None = None
+    edgecolor: MplColor | None = None
     title: str | None = None
     title_fontsize: int | str | None = None
-
-    @property
-    def to_dict(self) -> dict:
-        """
-        Convert parameters to a dictionary compatible with matplotlib.axes.Axes.legend.
-        """
-        return {
-            k: v
-            for k, v in {
-                "loc": self.loc,
-                "bbox_to_anchor": self.bbox_to_anchor,
-                "ncol": self.ncol,
-                "fontsize": self.fontsize,
-                "frameon": self.frameon,
-                "fancybox": self.fancybox,
-                "shadow": self.shadow,
-                "framealpha": self.framealpha,
-                "facecolor": self.facecolor,
-                "edgecolor": self.edgecolor,
-                "title": self.title,
-                "title_fontsize": self.title_fontsize,
-            }.items()
-            if v is not None
-        }
