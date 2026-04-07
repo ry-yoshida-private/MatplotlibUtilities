@@ -20,6 +20,7 @@ from .draw.parameters import (
     ColorbarParameters,
     LegendParameters,
     LineParameters,
+    ArrowParameters,
 
     # Enums
     Aspect,
@@ -51,6 +52,7 @@ __all__ = [
     "ColorbarParameters",
     "LegendParameters",
     "LineParameters",
+    "ArrowParameters",
 
     # axis.parameters
     "TickParamsParameters",
