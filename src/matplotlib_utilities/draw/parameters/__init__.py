@@ -1,14 +1,16 @@
-from .base_class import Subparameters
+from ...subparameter import Subparameters
+from .arrow import ArrowParameters
 from .scatter import ScatterParameters
 from .imshow import ImshowParameters
-from .tick_params import TickParamsParameters
 from .colorbar import ColorbarParameters
 from .plot import PlotParameters
 from .line import LineParameters
 from .legend import LegendParameters
-from .utils import (
+from ...utils import (
     Aspect,
-    Interpolation,
+    ArrowShape,
+    Linestyle,
+    InterpolationMethod,
     InterpolationStage,
     Origin,
     Location,
@@ -18,18 +20,18 @@ from .utils import (
     )
 
 __all__ = [
-    # Parameters
     "Subparameters",
+    "ArrowParameters",
     "ScatterParameters",
     "ImshowParameters",
-    "TickParamsParameters",
     "ColorbarParameters",
     "PlotParameters",
     "LineParameters",
     "LegendParameters",
-    # Enums
     "Aspect",
-    "Interpolation",
+    "ArrowShape",
+    "Linestyle",
+    "InterpolationMethod",
     "InterpolationStage",
     "Origin",
     "Location",

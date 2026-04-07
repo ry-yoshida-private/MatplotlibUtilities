@@ -1,4 +1,0 @@
-matplotlib
-numpy
-pytest
-color @ git+https://github.com/ry-yoshida-private/Color.git

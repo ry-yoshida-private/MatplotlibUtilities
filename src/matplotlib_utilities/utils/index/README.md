@@ -2,7 +2,7 @@
 
 ## Overview
 
-Types for **addressing subplots** inside a flattened axes array. `MatplotGraphMaker` accepts a `SubplotIndex`, which is either a linear subplot number plus row hint or an explicit row/column pair.
+Types for **addressing subplots** inside a flattened axes array. `MatplotGraphMaker` accepts a `SubplotIndex`, which is either a linear subplot number plus row hint or an explicit row/column pair. Import `SubplotIndex` from `matplotlib_utilities` (re-exported from `utils`).
 
 ## Components
 

@@ -2,24 +2,29 @@
 from .table_axis import TableAxis
 from .parameter import GraphParameters
 from .maker import MatplotGraphMaker
+from .axis import AxisOps
+from .draw import Draw
 from .layout import GraphLayout
 from .utils import (
     RowColumnIndex,
+    SubplotIndex,
     SubplotNumber,
     )
 from .graph_axis import GraphAxis
-from .subparameters import (
-    # Parameters
+from .axis.parameters import TickParamsParameters
+from .draw.parameters import (
+    # Parameters (Draw)
     PlotParameters,
     ScatterParameters,
     ImshowParameters,
-    TickParamsParameters,
     ColorbarParameters,
     LegendParameters,
+    LineParameters,
 
     # Enums
     Aspect,
-    Interpolation,
+    Linestyle,
+    InterpolationMethod,
     InterpolationStage,
     Origin,
     Location,
@@ -32,21 +37,28 @@ __all__ = [
     "TableAxis",
     "GraphParameters",
     "MatplotGraphMaker",
+    "AxisOps",
+    "Draw",
     "RowColumnIndex",
+    "SubplotIndex",
     "SubplotNumber",
     "GraphAxis",
-    
-    # subparameters
+
+    # draw.parameters: Subparameters subclasses
     "PlotParameters",
     "ScatterParameters",
     "ImshowParameters",
-    "TickParamsParameters",
     "ColorbarParameters",
     "LegendParameters",
+    "LineParameters",
 
-    # Enums
+    # axis.parameters
+    "TickParamsParameters",
+
+    # Enums (imshow / colorbar / line styling, etc.)
     "Aspect",
-    "Interpolation",
+    "Linestyle",
+    "InterpolationMethod",
     "InterpolationStage",
     "Origin",
     "Location",

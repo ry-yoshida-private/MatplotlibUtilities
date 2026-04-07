@@ -10,13 +10,17 @@ import numpy as np
 import pytest
 from pathlib import Path
 
-from matplotlib_utilities.graph_axis import GraphAxis
-from matplotlib_utilities.layout import GraphLayout
-from matplotlib_utilities.maker import MatplotGraphMaker
-from matplotlib_utilities.parameter import GraphParameters
-from matplotlib_utilities.subparameters import LineParameters, Orientation, ScatterParameters
-from matplotlib_utilities.table_axis import TableAxis
-from matplotlib_utilities.utils import SubplotNumber
+from matplotlib_utilities import (
+    GraphAxis,
+    GraphLayout,
+    GraphParameters,
+    LineParameters,
+    MatplotGraphMaker,
+    Orientation,
+    ScatterParameters,
+    SubplotNumber,
+    TableAxis,
+)
 
 
 def build_demo_graph_maker() -> MatplotGraphMaker:
@@ -36,31 +40,31 @@ def build_demo_graph_maker() -> MatplotGraphMaker:
     index = graph_maker.get_subplot_index_from_number(number=0)
     # Per-point marker area (matplotlib *s*); map e.g. confidences to visible sizes.
     sizes = 20.0 + confidences * 80.0
-    graph_maker.scatter(
+    graph_maker.draw.scatter(
         index=index,
         x=x1,
         y=y1,
         subparams=ScatterParameters(s=sizes),
     )
-    graph_maker.set_label(
+    graph_maker.axis.set_label(
         label="x",
         index=SubplotNumber(number=0, row_index=0),
         axis=GraphAxis.X,
     )
     index = graph_maker.get_subplot_index_from_number(number=1)
-    graph_maker.plot(
+    graph_maker.draw.plot(
         index=index,
         x=x1,
         y=y1,
         subparams=None,
     )
-    graph_maker.draw_line(
+    graph_maker.draw.line(
         value=0.5,
         orientation=Orientation.VERTICAL,
         index=graph_maker.get_subplot_index_from_number(number=1),
         subparams=LineParameters(color="red"),
     )
-    graph_maker.draw_line(
+    graph_maker.draw.line(
         value=0.0,
         orientation=Orientation.HORIZONTAL,
         index=graph_maker.get_subplot_index_from_number(number=1),

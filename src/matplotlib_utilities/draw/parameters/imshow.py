@@ -1,9 +1,11 @@
 from dataclasses import dataclass
 
-from .base_class import Subparameters
-from .utils import (
+from matplotlib.colors import Normalize
+
+from ...subparameter import Subparameters
+from ...utils import (
     Aspect,
-    Interpolation,
+    InterpolationMethod,
     InterpolationStage,
     Origin,
     )
@@ -17,12 +19,12 @@ class ImshowParameters(Subparameters):
     ----------
     cmap: str | None
         The colormap used to map scalar data to colors.
-    norm: str | None
-        The normalization method used to scale scalar data to the [0, 1] range.
+    norm: Normalize | None
+        Data normalization before colormap mapping (subclasses of matplotlib.colors.Normalize).
     aspect: Aspect | float | None
         The aspect ratio of the axes. Use Aspect enum values for 'equal' or 'auto', or a float for custom ratio.
-    interpolation: Interpolation | None
-        The interpolation method used for resampling. Use Interpolation enum values.
+    interpolation: InterpolationMethod | None
+        The interpolation method used for resampling. Use InterpolationMethod enum values.
     interpolation_stage: InterpolationStage | None
         The stage at which interpolation is performed. Use InterpolationStage enum values.
     alpha: float | None
@@ -48,9 +50,9 @@ class ImshowParameters(Subparameters):
         Set the url of the created AxesImage.
     """
     cmap: str | None = None
-    norm: str | None = None
+    norm: Normalize | None = None
     aspect: Aspect | float | None = None
-    interpolation: Interpolation | None = None
+    interpolation: InterpolationMethod | None = None
     interpolation_stage: InterpolationStage | None = None
     alpha: float | None = None
     vmin: float | None = None

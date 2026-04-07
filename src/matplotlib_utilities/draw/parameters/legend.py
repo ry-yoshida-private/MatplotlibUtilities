@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from ..utils.color_types import MplColor
-from .base_class import Subparameters
+from ...utils.color import MplColor
+from ...subparameter import Subparameters
 
 
 @dataclass

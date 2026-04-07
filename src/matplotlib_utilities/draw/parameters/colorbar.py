@@ -9,13 +9,13 @@ from matplotlib.axes import Axes
 from mpl_toolkits.axes_grid1.axes_divider import AxesDivider
 
 
-from .base_class import Subparameters
-from ..utils import ColorMap
-from .utils import (
-    Location,
-    Orientation,
+from ...subparameter import Subparameters
+from ...utils import (
+    ColorMap,
     ColorbarExtend,
     ColorbarSpacing,
+    Location,
+    Orientation,
     )
 
 @dataclass
@@ -204,12 +204,12 @@ class ColorbarParameters(Subparameters):
         divider: AxesDivider
         ) -> Axes:
         """
-        Create an AxesDivider for the colorbar.
+        Append colorbar axes to *divider* and return the new Axes.
 
         Parameters
         ----------
         divider: AxesDivider
-            The AxesDivider object to append the colorbar axes to.
+            Divider for the parent axes (from make_axes_locatable).
 
         Returns
         -------

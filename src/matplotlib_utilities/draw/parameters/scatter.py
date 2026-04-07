@@ -3,9 +3,9 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike
 
-from .base_class import Subparameters
-from ..utils import Marker
-from ..utils.color_types import ScatterColorArg
+from ...subparameter import Subparameters
+from ...utils import Marker
+from ...utils.color import ScatterColorArg
 
 @dataclass
 class ScatterParameters(Subparameters):
@@ -16,7 +16,7 @@ class ScatterParameters(Subparameters):
     ----------
     s: float | ArrayLike | None
         Marker area in points², scalar or one value per point (matplotlib *s*).
-        None omits *s* so matplotlib uses its default (``rcParams['lines.markersize'] ** 2``).
+        None omits *s* so matplotlib uses its default (rcParams['lines.markersize'] ** 2).
     c: ScatterColorArg | None
         Marker face color: a single color, one color per point, or a 1-D array of
         scalars. Scalars are painted using *cmap* with optional *vmin* / *vmax*

@@ -1,10 +1,10 @@
 from enum import Enum
 
 
-class Interpolation(Enum):
+class InterpolationMethod(Enum):
     """
     Interpolation methods for matplotlib imshow.
-    
+
     These methods control how the image is resampled when displayed.
     """
     NONE = "none"

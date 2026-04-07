@@ -1,5 +1,7 @@
 from dataclasses import dataclass
-from .base_class import Subparameters
+
+from ...subparameter import Subparameters
+
 
 @dataclass
 class TickParamsParameters(Subparameters):
@@ -31,7 +33,7 @@ class TickParamsParameters(Subparameters):
     left: bool = False
     right: bool = False
     top: bool = False
-    
+
     # Control visibility of tick labels (the text values next to tick marks)
     labelbottom: bool = False
     labelleft: bool = False

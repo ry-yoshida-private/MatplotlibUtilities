@@ -43,13 +43,13 @@ z = np.cos(x * 10)
 
 idx0 = maker.get_subplot_index_from_number(number=0)
 idx1 = maker.get_subplot_index_from_number(number=1)
-maker.plot(index=idx0, x=x, y=y, subparams=PlotParameters())
+maker.draw.plot(index=idx0, x=x, y=y, subparams=PlotParameters())
 # Third quantity as color (matplotlib ``c``) on a 2D scatter.
-maker.scatter(index=idx1, x=x, y=y, subparams=ScatterParameters(c=z, cmap="viridis"))
+maker.draw.scatter(index=idx1, x=x, y=y, subparams=ScatterParameters(c=z, cmap="viridis"))
 maker.finalize(is_showing_result_enabled=True)
 ```
 
 ## Notes
 
 - `requirements.txt` includes a Git dependency for `color` (used with typed color arguments in subparameters).
-- Subplot indexing types live under [`src/matplotlib_utilities/utils/index/`](src/matplotlib_utilities/utils/index/README.md).
+- Subplot indexing types live under [`src/matplotlib_utilities/utils/index/`](src/matplotlib_utilities/utils/index/README.md); `SubplotIndex` is also exported from the `matplotlib_utilities` package root.

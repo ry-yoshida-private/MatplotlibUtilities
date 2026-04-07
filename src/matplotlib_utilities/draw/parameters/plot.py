@@ -1,7 +1,8 @@
 from dataclasses import dataclass
 
-from ..utils.color_types import MplColor
-from .base_class import Subparameters
+from ...utils import Linestyle
+from ...utils.color import MplColor
+from ...subparameter import Subparameters
 
 
 @dataclass
@@ -12,10 +13,10 @@ class PlotParameters(Subparameters):
     Attributes:
     ----------
     color: MplColor | None
-        The color of the plot (``color.ColorType`` forms plus matplotlib-only extras).
+        The color of the plot (ColorType-style palette forms plus matplotlib-only extras).
     linewidth: float | None
         The width of the lines.
-    linestyle: str | None
+    linestyle: Linestyle | None
         The style of the lines.
     marker: str | None
         The marker of the plot.
@@ -45,7 +46,7 @@ class PlotParameters(Subparameters):
 
     color: MplColor | None = None
     linewidth: float | None = None
-    linestyle: str | None = None
+    linestyle: Linestyle | None = None
     marker: str | None = None
     markersize: float | None = None
     markeredgewidth: float | None = None
@@ -64,3 +65,17 @@ class PlotParameters(Subparameters):
     solid_joinstyle: str | None = None
     drawstyle: str | None = None
     antialiased: bool | None = None
+
+    def __post_init__(self):
+        """
+        Validate parameters after initialization.
+        """
+        if self.linewidth is not None and self.linewidth <= 0:
+            raise ValueError("linewidth must be positive")
+        if self.markersize is not None and self.markersize <= 0:
+            raise ValueError("markersize must be positive")
+        if self.markeredgewidth is not None and self.markeredgewidth <= 0:
+            raise ValueError("markeredgewidth must be positive")
+        if self.zorder is not None and self.zorder < 0:
+            raise ValueError("zorder must be non-negative")
+        

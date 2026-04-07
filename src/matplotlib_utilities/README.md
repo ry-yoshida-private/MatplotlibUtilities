@@ -18,6 +18,6 @@
 | [`layout.py`](./layout.py) | `GraphLayout`: row/column grid and helpers such as `from_number` |
 | [`table_axis.py`](./table_axis.py) | `TableAxis`: row-major vs column-major layout when deriving grids |
 | [`graph_axis.py`](./graph_axis.py) | `GraphAxis`: X/Y axis enum for labels and related helpers |
-| [`subparameters/`](./subparameters/README.md) | Dataclasses (`Subparameters` subclasses) and enums for Matplotlib kwargs |
-| [`utils/`](./utils/README.md) | Markers, colormap enum, color typing, subplot index types, journal-style ticks |
+| [`draw/`](./draw/), [`axis/`](./axis/), [`subparameter.py`](./subparameter.py) | `Draw` / `AxisOps`, `Subparameters` subclasses for plot kwargs |
+| [`utils/`](./utils/README.md) | Markers, colormap/color typing, subplot index types, imshow/colorbar kwargs enums (`Aspect`, `Location`, …) |
 

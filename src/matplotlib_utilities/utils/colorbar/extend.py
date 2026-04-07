@@ -4,7 +4,7 @@ from enum import Enum
 class ColorbarExtend(Enum):
     """
     Extend options for matplotlib colorbar.
-    
+
     Attributes:
     ----------
     NEITHER: No extensions.

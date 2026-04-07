@@ -56,7 +56,7 @@ class ColorMap(Enum):
     BINARY = 'binary'
     BONE = 'bone'
     COOL = 'cool'
-    COPPER = 'copper'   
+    COPPER = 'copper'
 
     def is_reversed(self) -> bool:
         """
@@ -80,4 +80,3 @@ class ColorMap(Enum):
             The colormap object.
         """
         return get_cmap(self.value)
-

@@ -4,7 +4,7 @@ from enum import Enum
 class ColorbarSpacing(Enum):
     """
     Spacing options for matplotlib colorbar.
-    
+
     Attributes:
     ----------
     UNIFORM: Each color gets the same space.
