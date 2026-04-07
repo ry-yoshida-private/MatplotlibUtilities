@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ...utils import Linestyle
+from ...utils import Linestyle, Marker
 from ...utils.color import MplColor
 from ...subparameter import Subparameters
 
@@ -18,7 +18,7 @@ class PlotParameters(Subparameters):
         The width of the lines.
     linestyle: Linestyle | None
         The style of the lines.
-    marker: str | None
+    marker: Marker | None
         The marker of the plot.
     markersize: float | None
         The size of the markers.
@@ -47,7 +47,7 @@ class PlotParameters(Subparameters):
     color: MplColor | None = None
     linewidth: float | None = None
     linestyle: Linestyle | None = None
-    marker: str | None = None
+    marker: Marker | None = None
     markersize: float | None = None
     markeredgewidth: float | None = None
     markeredgecolor: MplColor | None = None

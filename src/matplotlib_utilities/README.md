@@ -2,22 +2,49 @@
 
 ## Overview
 
-`matplotlib_utilities` builds publication-style multi-panel figures by combining:
+| Layer | Types | Role |
+| ----- | ----- | ---- |
+| Layout | `GraphLayout`, `TableAxis` | Subplot grid; helpers to build layout from a count |
+| Global style | `GraphParameters` | Font, spacing, DPI, figure size |
+| Per-plot kwargs | `*Parameters` dataclasses | Typed kwargs → `to_dict` for Matplotlib |
+| Coordinator | `MatplotGraphMaker` | Builds `Figure` / `Axes`; see **`draw`** and **`axis`** below |
 
-- layout (`GraphLayout`, `TableAxis`)
-- global figure parameters (`GraphParameters`)
-- per-plot kwargs as dataclasses (`subparameters`)
-- a coordinator (`MatplotGraphMaker`) that creates the figure/axes and dispatches drawing calls
+**Drawing API:** [`draw/README.md`](./draw/README.md) (`maker.draw`, plot/colorbar/legend helpers).
 
-## Components
+**Axis API:** [`axis/README.md`](./axis/README.md) (`maker.axis`, labels, limits, ticks).
 
-| Component | Description |
-| --------- | ----------- |
-| [`maker.py`](./maker.py) | `MatplotGraphMaker`: figure/axes creation, scatter/plot/imshow, colorbar, legend, lines, labels, tick styling |
-| [`parameter.py`](./parameter.py) | `GraphParameters`: font size, spacing, DPI, figure size, aspect ratio limits |
-| [`layout.py`](./layout.py) | `GraphLayout`: row/column grid and helpers such as `from_number` |
-| [`table_axis.py`](./table_axis.py) | `TableAxis`: row-major vs column-major layout when deriving grids |
-| [`graph_axis.py`](./graph_axis.py) | `GraphAxis`: X/Y axis enum for labels and related helpers |
-| [`draw/`](./draw/), [`axis/`](./axis/), [`subparameter.py`](./subparameter.py) | `Draw` / `AxisOps`, `Subparameters` subclasses for plot kwargs |
-| [`utils/`](./utils/README.md) | Markers, colormap/color typing, subplot index types, imshow/colorbar kwargs enums (`Aspect`, `Location`, …) |
+Exported names: [`__init__.py`](./__init__.py). Utilities and subplot index types: [`utils/README.md`](./utils/README.md).
 
+## `MatplotGraphMaker` (cheat sheet)
+
+| Attribute | Role |
+| --------- | ---- |
+| `layout`, `parameters` | Grid + figure defaults (applied when the figure is created) |
+| `fig`, `ax` | Raw Matplotlib objects (`ax` is 2D, `squeeze=False`) |
+| `draw`, `axis` | See linked READMEs above |
+
+| Method | Role |
+| ------ | ---- |
+| `access_subplot(index)` | `Axes` for a `SubplotIndex` |
+| `get_subplot_index_from_number` / `..._row_column` | Build indices |
+| `finalize(...)` | `subplots_adjust`, optional save / show / close |
+
+## Layout and indices (minimal)
+
+| Type | Note |
+| ---- | ---- |
+| `GraphLayout` | `number`, `row`, `column`; factories in [`layout.py`](./layout.py) |
+| `SubplotIndex` | `RowColumnIndex` or `SubplotNumber` — see [`utils/index`](./utils/index/subplot_index.py) |
+| `GraphAxis` | `X` / `Y` for axis helpers — [`graph_axis.py`](./graph_axis.py) |
+
+## Module map
+
+| Path | Contents |
+| ---- | -------- |
+| [`maker.py`](./maker.py) | `MatplotGraphMaker` |
+| [`layout.py`](./layout.py), [`table_axis.py`](./table_axis.py), [`graph_axis.py`](./graph_axis.py) | Layout / enums |
+| [`parameter.py`](./parameter.py), [`subparameter.py`](./subparameter.py) | `GraphParameters`, `Subparameters` base |
+| [`draw/`](./draw/) | `Draw` + parameters |
+| [`axis/`](./axis/) | `AxisOps` + tick params |
+
+Install and a short example: [../../README.md](../../README.md).

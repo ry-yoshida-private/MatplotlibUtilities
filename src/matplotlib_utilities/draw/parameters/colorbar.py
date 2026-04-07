@@ -85,7 +85,7 @@ class ColorbarParameters(Subparameters):
     orientation: Orientation | None = None
     fraction: float = 0.15
     shrink: float = 1.0
-    aspect: float = 20
+    aspect: float = 20.0
     pad: float | None = None
     anchor: tuple[float, float] | None = None
     panchor: tuple[float, float] | bool | None = None

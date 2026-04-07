@@ -1,15 +1,47 @@
-# utils
+# `utils` — shared types
 
-## Overview
+Small **enums**, **type aliases**, and **subplot index** types used by `draw.parameters`, `AxisOps`, and `MatplotGraphMaker`. Most symbols are also re-exported from the package root (`matplotlib_utilities`).
 
-Helper types shared across the package: **subplot indexing**, **markers**, a **colormap enum**, **structured color types** (including integration with the external `color` package), and **imshow/colorbar kwargs enums** (`Aspect`, `Location`, `ColorbarExtend`, …).
+## By topic
 
-## Components
+| Topic | Location | Role |
+| ----- | -------- | ---- |
+| Subplot addressing | [`index/`](./index/README.md) | `SubplotIndex`, `RowColumnIndex`, `SubplotNumber` |
+| Markers | [`marker.py`](./marker.py) | `Marker` enum (Matplotlib marker strings) |
+| Colormaps & colors | [`color/`](./color/) | `ColorMap`; palette types from `color` + Matplotlib/numpy shims |
+| Imshow / colorbar / lines | top-level `*.py` | `Aspect`, `Origin`, `InterpolationMethod`, `InterpolationStage`, `ColorbarExtend`, `ColorbarSpacing`, … |
+| Lines, arrows, layout hints | [`linestyle.py`](./linestyle.py), [`arrow_shape.py`](./arrow_shape.py), [`orientation.py`](./orientation.py), [`location.py`](./location.py) | Kwargs-friendly enums |
 
-| Component | Description |
-| --------- | ----------- |
-| [`index/`](./index/README.md) | `SubplotIndex` (union), `RowColumnIndex`, `SubplotNumber` |
-| [`marker.py`](./marker.py) | `Marker` helper for marker styles |
-| [`color/`](./color/) | `ColorMap` enum (`color_map.py`) and typed color aliases (`color_types.py`: `MplColor`, `ScatterColorArg`, etc.) |
-| `aspect.py`, [`interpolation/`](./interpolation/) (`method.py`, `stage.py`), `origin.py`, `location.py`, `orientation.py`, [`colorbar/`](./colorbar/) (`extend.py`, `spacing.py`) | Enums consumed by `draw.parameters` (imshow/colorbar kwargs) |
+## Exports (`utils.__all__`)
 
+| Name | Kind | Summary |
+| ---- | ---- | ------- |
+| `SubplotIndex` | Type alias | `RowColumnIndex \| SubplotNumber` — see [`index/subplot_index.py`](./index/subplot_index.py) |
+| `RowColumnIndex` | Dataclass | Zero-based `(row_index, column_index)` |
+| `SubplotNumber` | Dataclass | Linear subplot index with row hint — [`index/subplot_number.py`](./index/subplot_number.py) |
+| `Marker` | Enum | Scatter/plot marker styles |
+| `ColorMap` | Enum | Named colormaps — [`color/color_map.py`](./color/color_map.py) |
+| `ColorType`, `HexType`, `HsvFloatType`, `RgbFloatType`, `RgbIntType`, `RgbaIntType` | Type aliases | From the `color` package |
+| `MplColor` | Type alias | `color.ColorType \| matplotlib.typing.ColorType` |
+| `ScatterColorArg` | Type alias | Single colors or per-point `ArrayLike` for scatter `c` |
+| `Aspect` | Enum | Axes aspect modes |
+| `Origin` | Enum | `imshow` origin |
+| `InterpolationMethod`, `InterpolationStage` | Enums | `imshow` interpolation |
+| `Location` | Enum | Legend (and similar) placement |
+| `Orientation` | Enum | Horizontal vs vertical (`line`, etc.) |
+| `ArrowShape` | Enum | `Axes.arrow` head shape (`full` / `left` / `right`) |
+| `Linestyle` | Enum | Line dash patterns (strings or Matplotlib tuples) |
+| `ColorbarExtend` | Enum | Colorbar over/under extension |
+| `ColorbarSpacing` | Enum | Colorbar tick spacing style |
+
+## On-disk layout
+
+| Path | Notes |
+| ---- | ----- |
+| [`index/`](./index/) | Subplot indices; [detailed README](./index/README.md) |
+| [`color/`](./color/) | `color_map.py`, `color_types.py` |
+| [`colorbar/`](./colorbar/) | `extend.py`, `spacing.py` |
+| [`interpolation/`](./interpolation/) | `method.py`, `stage.py` |
+| `aspect.py`, `origin.py`, `location.py`, `orientation.py`, `linestyle.py`, `arrow_shape.py`, `marker.py` | One enum (or small helper) per module |
+
+Authoritative list: [`__init__.py`](./__init__.py). Package overview: [../README.md](../README.md).
