@@ -1,4 +1,5 @@
 from ...subparameter import Subparameters
+from .annotate import AnnotateParameters
 from .arrow import ArrowParameters
 from .scatter import ScatterParameters
 from .imshow import ImshowParameters
@@ -21,6 +22,7 @@ from ...utils import (
 
 __all__ = [
     "Subparameters",
+    "AnnotateParameters",
     "ArrowParameters",
     "ScatterParameters",
     "ImshowParameters",

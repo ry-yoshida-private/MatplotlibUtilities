@@ -3,15 +3,16 @@ from dataclasses import dataclass
 import numpy as np
 from numpy.typing import ArrayLike
 
-from ...subparameter import Subparameters
 from ...utils import Marker
 from ...utils.color import ScatterColorArg
+from .base import ArtistParameters
+
 
 @dataclass
-class ScatterParameters(Subparameters):
+class ScatterParameters(ArtistParameters):
     """
     Parameters for the scatter plot.
-    
+
     Attributes:
     ----------
     s: float | ArrayLike | None
@@ -23,6 +24,8 @@ class ScatterParameters(Subparameters):
         (matplotlib *c*).
     alpha: float | None
         Opacity of the markers.
+    zorder: float | None
+        Drawing order of the markers.
     marker: Marker
         Marker style.
     cmap: str | None
@@ -39,9 +42,9 @@ class ScatterParameters(Subparameters):
     plotnonfinite: bool
         If True, plot points whose *c* value is non-finite; if False, they are dropped.
     """
+
     s: float | ArrayLike | None = None
     c: ScatterColorArg | None = None
-    alpha: float | None = None
     marker: Marker = Marker.POINT
     cmap: str | None = None
     linewidths: float | None = None
@@ -50,10 +53,9 @@ class ScatterParameters(Subparameters):
     vmax: float | None = None
     plotnonfinite: bool = False
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
+        super().__post_init__()
         if self.s is not None:
             s_arr = np.asarray(self.s, dtype=float)
             if np.any(s_arr < 0):
                 raise ValueError("s must be non-negative")
-        if self.alpha is not None and not (0 <= self.alpha <= 1):
-            raise ValueError("alpha must be between 0 and 1")

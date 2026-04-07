@@ -2,16 +2,16 @@ from dataclasses import dataclass
 
 from matplotlib.colors import Normalize
 
-from ...subparameter import Subparameters
 from ...utils import (
     Aspect,
     InterpolationMethod,
     InterpolationStage,
     Origin,
     )
+from .base import ArtistParameters
 
 @dataclass
-class ImshowParameters(Subparameters):
+class ImshowParameters(ArtistParameters):
     """
     Parameters for the imshow plot.
     
@@ -29,6 +29,8 @@ class ImshowParameters(Subparameters):
         The stage at which interpolation is performed. Use InterpolationStage enum values.
     alpha: float | None
         The alpha blending value, between 0 (transparent) and 1 (opaque).
+    zorder: float | None
+        Drawing order of the image.
     vmin: float | None
         The minimum value for the colormap scaling.
     vmax: float | None
@@ -54,7 +56,6 @@ class ImshowParameters(Subparameters):
     aspect: Aspect | float | None = None
     interpolation: InterpolationMethod | None = None
     interpolation_stage: InterpolationStage | None = None
-    alpha: float | None = None
     vmin: float | None = None
     vmax: float | None = None
     origin: Origin | None = None
@@ -68,8 +69,7 @@ class ImshowParameters(Subparameters):
         """
         Validate parameters after initialization.
         """
-        if self.alpha is not None and not (0 <= self.alpha <= 1):
-            raise ValueError("alpha must be between 0 and 1")
+        super().__post_init__()
         if self.filterrad <= 0:
             raise ValueError("filterrad must be greater than 0")
         if self.extent is not None and len(self.extent) != 4:

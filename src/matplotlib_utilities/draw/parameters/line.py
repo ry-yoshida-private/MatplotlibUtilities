@@ -1,14 +1,11 @@
 from dataclasses import dataclass
 
-from ...utils.color import MplColor
-from ...subparameter import Subparameters
+from .base import LineStyleParameters
+
 
 @dataclass
-class LineParameters(Subparameters):
+class LineParameters(LineStyleParameters):
     """
     Parameters for the line.
-
-    TODO: Add more parameters.
     """
-    color: MplColor | None = None
 

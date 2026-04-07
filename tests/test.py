@@ -1,4 +1,4 @@
-"""Smoke tests and the former ``maker`` module demo (non-interactive)."""
+"""Smoke tests and the former maker module demo (non-interactive)."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import pytest
 from pathlib import Path
 
 from matplotlib_utilities import (
+    AnnotateParameters,
     GraphAxis,
     GraphLayout,
     GraphParameters,
@@ -46,6 +47,16 @@ def build_demo_graph_maker() -> MatplotGraphMaker:
         y=y1,
         subparams=ScatterParameters(s=sizes),
     )
+    graph_maker.draw.annotate(
+        text="mean",
+        xy=(float(np.mean(x1)), float(np.mean(y1))),
+        index=index,
+        xytext=(float(np.mean(x1)) + 0.5, float(np.mean(y1)) + 0.5),
+        subparams=AnnotateParameters(
+            arrowprops={"arrowstyle": "->"},
+            fontsize=9,
+        ),
+    )
     graph_maker.axis.set_label(
         label="x",
         index=SubplotNumber(number=0, row_index=0),
@@ -77,6 +88,7 @@ def test_import_package() -> None:
     import matplotlib_utilities as mu  # noqa: F401
 
     assert hasattr(mu, "MatplotGraphMaker")
+    assert hasattr(mu, "AnnotateParameters")
 
 
 def test_graph_maker_demo_smoke(tmp_path: Path) -> None:

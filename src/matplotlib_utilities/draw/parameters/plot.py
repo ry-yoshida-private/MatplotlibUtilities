@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
-from ...utils import Linestyle, Marker
+from ...utils import Marker
 from ...utils.color import MplColor
-from ...subparameter import Subparameters
+from .base import LineStyleParameters
 
 
 @dataclass
-class PlotParameters(Subparameters):
+class PlotParameters(LineStyleParameters):
     """
     Parameters for the plot.
 
@@ -44,38 +44,24 @@ class PlotParameters(Subparameters):
         Whether to antialias the plot.
     """
 
-    color: MplColor | None = None
-    linewidth: float | None = None
-    linestyle: Linestyle | None = None
     marker: Marker | None = None
     markersize: float | None = None
     markeredgewidth: float | None = None
     markeredgecolor: MplColor | None = None
     markerfacecolor: MplColor | None = None
-    alpha: float | None = None
-
-    # Labeling
-    label: str | None = None
-
-    # Drawing order
-    zorder: float | None = None
 
     # Other
     solid_capstyle: str | None = None
     solid_joinstyle: str | None = None
     drawstyle: str | None = None
-    antialiased: bool | None = None
 
     def __post_init__(self):
         """
         Validate parameters after initialization.
         """
-        if self.linewidth is not None and self.linewidth <= 0:
-            raise ValueError("linewidth must be positive")
+        super().__post_init__()
         if self.markersize is not None and self.markersize <= 0:
             raise ValueError("markersize must be positive")
         if self.markeredgewidth is not None and self.markeredgewidth <= 0:
             raise ValueError("markeredgewidth must be positive")
-        if self.zorder is not None and self.zorder < 0:
-            raise ValueError("zorder must be non-negative")
         

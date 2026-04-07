@@ -12,6 +12,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.axes_divider import AxesDivider
 
 from .parameters import (
+    AnnotateParameters,
     ArrowParameters,
     ColorbarParameters,
     ImshowParameters,
@@ -175,15 +176,6 @@ class Draw:
         subplot = self._maker.access_subplot(index=index)
         subplot.scatter(x=x, y=y, **subparams.to_dict)
 
-    def imscatter(self) -> None:
-        raise NotImplementedError("Not implemented yet.")
-
-    def hist(self) -> None:
-        raise NotImplementedError("Not implemented yet.")
-
-    def bar(self) -> None:
-        raise NotImplementedError("Not implemented yet.")
-
     def legend(
         self,
         index: SubplotIndex,
@@ -221,3 +213,47 @@ class Draw:
                 draw(x=value, **subparams.to_dict)
             case Orientation.HORIZONTAL:
                 draw(y=value, **subparams.to_dict)
+
+    def annotate(
+        self,
+        text: str,
+        xy: tuple[float, float],
+        index: SubplotIndex,
+        xytext: tuple[float, float] | None = None,
+        subparams: AnnotateParameters | None = None,
+    ) -> None:
+        """
+        Annotate a point on the subplot with text.
+
+        Wraps :meth:`matplotlib.axes.Axes.annotate`. Required inputs are the label
+        string, the data point xy, and the subplot index; optional text placement
+        and styling use xytext and subparams.
+
+        Parameters
+        ----------
+        text
+            The annotation string.
+        xy
+            The (x, y) point to annotate (data coordinates unless overridden by
+            subparams.xycoords).
+        index
+            Subplot index.
+        xytext
+            If set, (x, y) where the text is drawn; coordinate system from
+            subparams.textcoords. If None, matplotlib places text at xy.
+        subparams
+            Coordinate systems, arrow properties, clipping, and text styling
+            (color, fontsize, ha, va, and related Text keywords).
+        """
+        subparams = subparams or AnnotateParameters()
+        subplot = self._maker.access_subplot(index=index)
+        subplot.annotate(text, xy, xytext=xytext, **subparams.to_dict)
+
+    def imscatter(self) -> None:
+        raise NotImplementedError("Not implemented yet.")
+
+    def hist(self) -> None:
+        raise NotImplementedError("Not implemented yet.")
+
+    def bar(self) -> None:
+        raise NotImplementedError("Not implemented yet.")

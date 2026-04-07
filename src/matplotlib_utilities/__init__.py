@@ -14,6 +14,7 @@ from .graph_axis import GraphAxis
 from .axis.parameters import TickParamsParameters
 from .draw.parameters import (
     # Parameters (Draw)
+    AnnotateParameters,
     PlotParameters,
     ScatterParameters,
     ImshowParameters,
@@ -46,6 +47,7 @@ __all__ = [
     "GraphAxis",
 
     # draw.parameters: Subparameters subclasses
+    "AnnotateParameters",
     "PlotParameters",
     "ScatterParameters",
     "ImshowParameters",
