@@ -15,14 +15,18 @@ from .base import ArtistParameters, CmapParameters, LabelParameters
 
 
 @dataclass
-class ColorbarParameters(CmapParameters, LabelParameters, ArtistParameters, Subparameters):
+class ColorbarParameters(
+    CmapParameters,
+    LabelParameters,
+    ArtistParameters,
+    Subparameters,
+):
     """
     Parameters for the colorbar.
 
     Attributes:
     ----------
-    cmap, vmin, vmax
-        See base.cmap.CmapParameters.
+    # own
     location: Location | None = None
         The location, relative to the parent Axes, where the colorbar Axes is created.
         It also determines the orientation of the colorbar.
@@ -66,6 +70,21 @@ class ColorbarParameters(CmapParameters, LabelParameters, ArtistParameters, Subp
     spacing: ColorbarSpacing | None = None
         For discrete colorbars, uniform gives each color the same space;
         proportional makes the space proportional to the data interval.
+    # inherited from CmapParameters
+    cmap: str | None
+        The colormap name used for mapping normalized values to colors.
+    vmin: float | None
+        The minimum data value represented by the color scale.
+    vmax: float | None
+        The maximum data value represented by the color scale.
+    # inherited from LabelParameters
+    label: str | None
+        The label string for axis, legend, and other uses.
+    # inherited from ArtistParameters
+    alpha: float | None
+        The alpha of the colorbar.
+    zorder: float | None
+        The drawing order.
     """
 
     location: Location | None = None

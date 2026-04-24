@@ -7,12 +7,16 @@ from .base import ArtistParameters
 
 
 @dataclass
-class AnnotateParameters(ArtistParameters, Subparameters):
+class AnnotateParameters(
+    ArtistParameters,
+    Subparameters,
+):
     """
     Optional keyword arguments for matplotlib.axes.Axes.annotate.
 
     Attributes:
     ----------
+    # own
     xycoords: str | Any | None
         The coordinate system that xy is given in.
     textcoords: str | Any | None
@@ -31,16 +35,17 @@ class AnnotateParameters(ArtistParameters, Subparameters):
         The horizontal alignment of the text.
     va: str | None
         The vertical alignment of the text.
-    alpha: float | None
-        The alpha of the text and arrow.
     rotation: float | str | None
         The rotation of the text.
     rotation_mode: str | None
         The rotation mode of the text.
-    zorder: float | None
-        The order of the annotation.
     visible: bool | None
         Whether the annotation is visible.
+    # inherited from ArtistParameters
+    alpha: float | None
+        The alpha of the text and arrow.
+    zorder: float | None
+        The order of the annotation.
     """
 
     xycoords: str | Any | None = None

@@ -10,30 +10,45 @@ from .base import ArtistParameters, CmapParameters, LabelParameters
 
 
 @dataclass
-class ScatterParameters(CmapParameters, LabelParameters, ArtistParameters, Subparameters):
+class ScatterParameters(
+    CmapParameters,
+    LabelParameters,
+    ArtistParameters,
+    Subparameters,
+):
     """
     Parameters for the scatter plot.
 
     Attributes:
     ----------
+    # own
     s: float | ArrayLike | None
         Marker area in points squared.
     c: ScatterColorArg | None
         Marker face color or scalar values for colormap mapping.
-    alpha: float | None
-        Opacity of the markers.
-    zorder: float | None
-        Drawing order of the markers.
     marker: Marker
         Marker style.
-    cmap, vmin, vmax
-        Colormap settings used when c is numeric.
     linewidths: float | None
         Edge line width of the markers.
     edgecolors: ScatterColorArg | None
         Marker edge colors.
     plotnonfinite: bool
         Whether to draw points with non-finite c values.
+    # inherited from CmapParameters
+    cmap: str | None
+        The colormap name used when `c` contains numeric values.
+    vmin: float | None
+        The lower data bound mapped to the start of the colormap.
+    vmax: float | None
+        The upper data bound mapped to the end of the colormap.
+    # inherited from LabelParameters
+    label: str | None
+        The label string for axis, legend, and other uses.
+    # inherited from ArtistParameters
+    alpha: float | None
+        Opacity of the markers.
+    zorder: float | None
+        Drawing order of the markers.
     """
 
     s: float | ArrayLike | None = None

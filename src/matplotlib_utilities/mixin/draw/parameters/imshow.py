@@ -8,14 +8,17 @@ from .base import ArtistParameters, CmapParameters
 
 
 @dataclass
-class ImshowParameters(CmapParameters, ArtistParameters, Subparameters):
+class ImshowParameters(
+    CmapParameters,
+    ArtistParameters,
+    Subparameters,
+):
     """
     Parameters for the imshow plot.
 
     Attributes:
     ----------
-    cmap, vmin, vmax
-        See base.cmap.CmapParameters.
+    # own
     norm: Normalize | None
         Data normalization before colormap mapping.
     aspect: Aspect | float | None
@@ -24,10 +27,6 @@ class ImshowParameters(CmapParameters, ArtistParameters, Subparameters):
         The interpolation method used for resampling.
     interpolation_stage: InterpolationStage | None
         The stage at which interpolation is performed.
-    alpha: float | None
-        The alpha blending value between 0 and 1.
-    zorder: float | None
-        Drawing order of the image.
     origin: Origin | None
         Place the [0, 0] index of the array in upper left or lower left.
     extent: tuple[float, float, float, float] | None
@@ -40,6 +39,18 @@ class ImshowParameters(CmapParameters, ArtistParameters, Subparameters):
         Whether to use full resampling.
     url: str | None
         URL of the created AxesImage.
+    # inherited from CmapParameters
+    cmap: str | None
+        The colormap name used to convert normalized values to RGBA.
+    vmin: float | None
+        The lower bound of the data range mapped to the colormap minimum.
+    vmax: float | None
+        The upper bound of the data range mapped to the colormap maximum.
+    # inherited from ArtistParameters
+    alpha: float | None
+        The alpha blending value between 0 and 1.
+    zorder: float | None
+        Drawing order of the image.
     """
 
     norm: Normalize | None = None

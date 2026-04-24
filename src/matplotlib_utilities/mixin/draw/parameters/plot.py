@@ -7,18 +7,20 @@ from .base import ArtistParameters, LabelParameters, LineStyleParameters
 
 
 @dataclass
-class PlotParameters(LineStyleParameters, LabelParameters, ArtistParameters, Subparameters):
+class PlotParameters(
+    LineStyleParameters,
+    LabelParameters,
+    ArtistParameters,
+    Subparameters,
+):
     """
     Parameters for the plot.
 
     Attributes:
     ----------
+    # own
     color: MplColor | None
         The color of the plot.
-    linewidth: float | None
-        The width of the lines.
-    linestyle: Linestyle | None
-        The style of the lines.
     marker: Marker | None
         The marker of the plot.
     markersize: float | None
@@ -29,22 +31,29 @@ class PlotParameters(LineStyleParameters, LabelParameters, ArtistParameters, Sub
         The color of the marker edges.
     markerfacecolor: MplColor | None
         The color of the marker faces.
-    alpha: float | None
-        The alpha of the plot.
-    label: str | None
-        The label string for axis, legend, and other uses.
-    zorder: float | None
-        The order of the plot.
     solid_capstyle: str | None
         The style of the cap of the lines.
     solid_joinstyle: str | None
         The style of the join of the lines.
     drawstyle: str | None
         The style of the drawing of the lines.
+    # inherited from LineStyleParameters
+    linewidth: float | None
+        The width of the lines.
+    linestyle: Linestyle | None
+        The style of the lines.
     antialiased: bool | None
         Whether to antialias the plot.
+    # inherited from LabelParameters
+    label: str | None
+        The label string for axis, legend, and other uses.
+    # inherited from ArtistParameters
+    alpha: float | None
+        The alpha of the plot.
+    zorder: float | None
+        The order of the plot.
     """
-
+    color: MplColor | None = None
     marker: Marker | None = None
     markersize: float | None = None
     markeredgewidth: float | None = None

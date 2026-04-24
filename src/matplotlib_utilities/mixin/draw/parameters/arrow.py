@@ -2,16 +2,23 @@ from dataclasses import dataclass
 
 from ....subparameter import Subparameters
 from ....utils import ArrowShape
-from .base import ArtistParameters, LabelParameters, LineStyleParameters
+from .base import ArtistParameters, ColorParameters, LabelParameters, LineStyleParameters
 
 
 @dataclass
-class ArrowParameters(LineStyleParameters, LabelParameters, ArtistParameters, Subparameters):
+class ArrowParameters(
+    LineStyleParameters,
+    ColorParameters,
+    LabelParameters,
+    ArtistParameters,
+    Subparameters,
+):
     """
     Optional keyword arguments for matplotlib.axes.Axes.arrow.
 
     Attributes:
     ----------
+    # own
     width: float | None
         The width of the arrow.
     length_includes_head: bool | None
@@ -26,10 +33,30 @@ class ArrowParameters(LineStyleParameters, LabelParameters, ArtistParameters, Su
         The overhang of the arrow.
     head_starts_at_zero: bool | None
         Whether to start the head at zero.
-    edgecolor, facecolor
-        See base.color.ColorParameters.
     fill: bool | None
         Whether to fill the arrow.
+    # inherited from LineStyleParameters
+    color: MplColor | None
+        The color of the arrow.
+    linewidth: float | None
+        The width of the arrow line.
+    linestyle: Linestyle | None
+        The style of the arrow line.
+    antialiased: bool | None
+        Whether to antialias the arrow.
+    # inherited from ColorParameters
+    facecolor: MplColor | None
+        The fill color of the arrow patch.
+    edgecolor: MplColor | None
+        The edge color of the arrow patch.
+    # inherited from LabelParameters
+    label: str | None
+        The label string for axis, legend, and other uses.
+    # inherited from ArtistParameters
+    alpha: float | None
+        The alpha of the arrow.
+    zorder: float | None
+        The drawing order.
     """
 
     width: float | None = None

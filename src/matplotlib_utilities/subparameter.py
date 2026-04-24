@@ -17,9 +17,6 @@ class Subparameters(ABC):
     Enum-like values with a .value attribute are unwrapped in to_dict.
     """
 
-    def __post_init__(self) -> None:
-        return
-
     def _to_dict_skip_field(self, field: Field[Any], value: Any) -> bool:
         """When True, the field is omitted from the dict returned by to_dict."""
         return value is None
