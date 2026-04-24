@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 
 from ....subparameter import Subparameters
-from ....utils.color import MplColor
+from .base import ColorParameters
 
 
 @dataclass
-class LegendParameters(Subparameters):
+class LegendParameters(ColorParameters, Subparameters):
     """
     Parameters for the legend.
 
@@ -27,10 +27,8 @@ class LegendParameters(Subparameters):
         Whether to draw a shadow behind the legend.
     framealpha: float | None
         The alpha transparency of the legend background.
-    facecolor: MplColor | None
-        The legend background color.
-    edgecolor: MplColor | None
-        The legend frame edge color.
+    facecolor, edgecolor
+        See base.color.ColorParameters.
     title: str | None
         The legend title.
     title_fontsize: int | str | None
@@ -45,7 +43,5 @@ class LegendParameters(Subparameters):
     fancybox: bool | None = None
     shadow: bool | None = None
     framealpha: float | None = None
-    facecolor: MplColor | None = None
-    edgecolor: MplColor | None = None
     title: str | None = None
     title_fontsize: int | str | None = None

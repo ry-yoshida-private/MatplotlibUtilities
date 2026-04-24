@@ -37,10 +37,10 @@ class ScatterParameters(CmapParameters, LabelParameters, ArtistParameters, Subpa
     """
 
     s: float | ArrayLike | None = None
-    c: ScatterColorArg | None = None
+    c: ScatterColorArg | ArrayLike | None = None
     marker: Marker = Marker.POINT
-    linewidths: float | None = None
-    edgecolors: ScatterColorArg | None = None
+    linewidths: float | ArrayLike | None = None
+    edgecolors: ScatterColorArg | ArrayLike | None = None
     plotnonfinite: bool = False
 
     def __post_init__(self) -> None:

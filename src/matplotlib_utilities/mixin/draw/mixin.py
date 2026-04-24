@@ -19,6 +19,7 @@ from .parameters import (
     Orientation,
     PlotParameters,
     ScatterParameters,
+    BarParameters,
 )
 from ...protocols import MakerCanvas
 from ...utils import SubplotIndex
@@ -28,7 +29,8 @@ class DrawMixin:
     """
     Drawing API on the graph maker (for example maker.scatter(...)).
 
-    Concrete classes must provide fig, ax, and access_subplot
+    Concrete classes are expected to expose `fig`, `ax`, and
+    `access_subplot`, which this mixin uses to dispatch drawing calls
     (see matplotlib_utilities.protocols.MakerCanvas).
     """
 
@@ -39,7 +41,7 @@ class DrawMixin:
         subparams: ColorbarParameters | None = None,
     ) -> None:
         """
-        Draw the colorbar on the subplot without displaying the image.
+        Add a colorbar to a subplot without drawing image data on that subplot.
 
         Parameters
         ----------
@@ -238,11 +240,30 @@ class DrawMixin:
         subplot = self.access_subplot(index=index)
         subplot.annotate(text, xy, xytext=xytext, **subparams.to_dict)
 
+    def bar(
+        self: MakerCanvas,
+        x: np.ndarray,
+        index: SubplotIndex,
+        subparams: BarParameters | None = None,
+        ) -> None:
+        """
+        Draw a bar plot on the subplot.
+
+        Parameters
+        ----------
+        x: np.ndarray
+            The x values of the bars.
+        index: SubplotIndex
+            The index of the subplot.
+        subparams: BarParameters | None = None
+            The subparameters for the bar plot.
+        """
+        subparams = subparams or BarParameters()
+        subplot = self.access_subplot(index=index)
+        subplot.bar(x, **subparams.to_dict)
+
     def imscatter(self: MakerCanvas) -> None:
         raise NotImplementedError("Not implemented yet.")
 
     def hist(self: MakerCanvas) -> None:
-        raise NotImplementedError("Not implemented yet.")
-
-    def bar(self: MakerCanvas) -> None:
         raise NotImplementedError("Not implemented yet.")

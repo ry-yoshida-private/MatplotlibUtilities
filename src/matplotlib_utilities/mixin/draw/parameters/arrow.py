@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from ....subparameter import Subparameters
-from ....utils import ArrowShape, MplColor
+from ....utils import ArrowShape
 from .base import ArtistParameters, LabelParameters, LineStyleParameters
 
 
@@ -26,10 +26,8 @@ class ArrowParameters(LineStyleParameters, LabelParameters, ArtistParameters, Su
         The overhang of the arrow.
     head_starts_at_zero: bool | None
         Whether to start the head at zero.
-    edgecolor: MplColor | None
-        The color of the edge of the arrow.
-    facecolor: MplColor | None
-        The color of the face of the arrow.
+    edgecolor, facecolor
+        See base.color.ColorParameters.
     fill: bool | None
         Whether to fill the arrow.
     """
@@ -41,8 +39,6 @@ class ArrowParameters(LineStyleParameters, LabelParameters, ArtistParameters, Su
     shape: ArrowShape | None = None
     overhang: float | None = None
     head_starts_at_zero: bool | None = None
-    edgecolor: MplColor | None = None
-    facecolor: MplColor | None = None
     fill: bool | None = None
 
     def __post_init__(self) -> None:

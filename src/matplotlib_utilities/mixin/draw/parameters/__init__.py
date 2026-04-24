@@ -1,12 +1,13 @@
 from ....subparameter import Subparameters
 from .annotate import AnnotateParameters
 from .arrow import ArrowParameters
-from .scatter import ScatterParameters
-from .imshow import ImshowParameters
+from .bar import BarParameters
 from .colorbar import ColorbarParameters
-from .plot import PlotParameters
-from .line import LineParameters
+from .imshow import ImshowParameters
 from .legend import LegendParameters
+from .line import LineParameters
+from .plot import PlotParameters
+from .scatter import ScatterParameters
 from ....utils import (
     Aspect,
     ArrowShape,
@@ -21,23 +22,24 @@ from ....utils import (
 )
 
 __all__ = [
-    "Subparameters",
     "AnnotateParameters",
     "ArrowParameters",
-    "ScatterParameters",
-    "ImshowParameters",
-    "ColorbarParameters",
-    "PlotParameters",
-    "LineParameters",
-    "LegendParameters",
-    "Aspect",
     "ArrowShape",
-    "Linestyle",
+    "Aspect",
+    "BarParameters",
+    "ColorbarExtend",
+    "ColorbarParameters",
+    "ColorbarSpacing",
+    "ImshowParameters",
     "InterpolationMethod",
     "InterpolationStage",
-    "Origin",
+    "LegendParameters",
+    "LineParameters",
+    "Linestyle",
     "Location",
     "Orientation",
-    "ColorbarExtend",
-    "ColorbarSpacing",
+    "Origin",
+    "PlotParameters",
+    "ScatterParameters",
+    "Subparameters",
 ]
