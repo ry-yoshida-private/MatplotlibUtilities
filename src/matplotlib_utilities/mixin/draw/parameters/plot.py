@@ -1,19 +1,20 @@
 from dataclasses import dataclass
 
-from ...utils import Marker
-from ...utils.color import MplColor
-from .base import LineStyleParameters
+from ....subparameter import Subparameters
+from ....utils import Marker
+from ....utils.color import MplColor
+from .base import ArtistParameters, LabelParameters, LineStyleParameters
 
 
 @dataclass
-class PlotParameters(LineStyleParameters):
+class PlotParameters(LineStyleParameters, LabelParameters, ArtistParameters, Subparameters):
     """
     Parameters for the plot.
 
     Attributes:
     ----------
     color: MplColor | None
-        The color of the plot (ColorType-style palette forms plus matplotlib-only extras).
+        The color of the plot.
     linewidth: float | None
         The width of the lines.
     linestyle: Linestyle | None
@@ -31,7 +32,7 @@ class PlotParameters(LineStyleParameters):
     alpha: float | None
         The alpha of the plot.
     label: str | None
-        The label of the plot.
+        The label string for axis, legend, and other uses.
     zorder: float | None
         The order of the plot.
     solid_capstyle: str | None
@@ -49,19 +50,13 @@ class PlotParameters(LineStyleParameters):
     markeredgewidth: float | None = None
     markeredgecolor: MplColor | None = None
     markerfacecolor: MplColor | None = None
-
-    # Other
     solid_capstyle: str | None = None
     solid_joinstyle: str | None = None
     drawstyle: str | None = None
 
     def __post_init__(self):
-        """
-        Validate parameters after initialization.
-        """
         super().__post_init__()
         if self.markersize is not None and self.markersize <= 0:
             raise ValueError("markersize must be positive")
         if self.markeredgewidth is not None and self.markeredgewidth <= 0:
             raise ValueError("markeredgewidth must be positive")
-        

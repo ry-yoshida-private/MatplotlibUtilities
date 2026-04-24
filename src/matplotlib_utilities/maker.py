@@ -12,11 +12,11 @@ from .utils import (
     )
 from .layout import GraphLayout
 from .parameter import GraphParameters
-from .axis import AxisOps
-from .draw import Draw
+from .mixin.axis import AxisMixin
+from .mixin.draw import DrawMixin
 
 
-class MatplotGraphMaker:
+class MatplotGraphMaker(DrawMixin, AxisMixin):
     """
     A class for making matplotlib graphs.
 
@@ -30,9 +30,7 @@ class MatplotGraphMaker:
         The figure of the matplotlib graphs.
     ax: np.ndarray
         The axes of the matplotlib graphs.
-    draw: Draw
-        Composed drawing API (e.g. maker.draw.scatter(...)).
-    axis: AxisOps
+    axis: AxisMixin
         Axis API (labels, limits, tick visibility; e.g. maker.axis.set_label(...)).
     """
     def __init__(
@@ -53,8 +51,6 @@ class MatplotGraphMaker:
         self.layout: GraphLayout = layout or GraphLayout(number=1, column=1, row=1)
         self.parameters: GraphParameters = parameters or GraphParameters()
         self.fig, self.ax = self._create_canvas()
-        self.draw = Draw(self)
-        self.axis = AxisOps(self)
 
     def finalize(
         self,
@@ -127,7 +123,7 @@ class MatplotGraphMaker:
         """
         Return the :class:`~matplotlib.axes.Axes` at the given subplot index.
 
-        Used by composed helpers (e.g. maker.draw); library users may call
+        Used by drawing helpers; library users may call
         this for direct axes access.
 
         Parameters

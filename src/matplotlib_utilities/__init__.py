@@ -2,8 +2,9 @@
 from .table_axis import TableAxis
 from .parameter import GraphParameters
 from .maker import MatplotGraphMaker
-from .axis import AxisOps
-from .draw import Draw
+from .protocols import MakerCanvas
+from .mixin.axis import AxisMixin
+from .mixin.draw import DrawMixin
 from .layout import GraphLayout
 from .utils import (
     RowColumnIndex,
@@ -11,8 +12,8 @@ from .utils import (
     SubplotNumber,
     )
 from .graph_axis import GraphAxis
-from .axis.parameters import TickParamsParameters
-from .draw.parameters import (
+from .mixin.axis.parameters import TickParamsParameters
+from .mixin.draw.parameters import (
     # Parameters (Draw)
     AnnotateParameters,
     PlotParameters,
@@ -39,8 +40,9 @@ __all__ = [
     "TableAxis",
     "GraphParameters",
     "MatplotGraphMaker",
-    "AxisOps",
-    "Draw",
+    "MakerCanvas",
+    "AxisMixin",
+    "DrawMixin",
     "RowColumnIndex",
     "SubplotIndex",
     "SubplotNumber",

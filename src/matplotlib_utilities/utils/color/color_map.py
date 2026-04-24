@@ -1,62 +1,105 @@
 from enum import Enum
 
-from matplotlib.cm import get_cmap
 from matplotlib.colors import Colormap
+from matplotlib import colormaps
 
 class ColorMap(Enum):
     # --- Perceptually Uniform Sequential ---
-    MAGMA = 'magma'
-    INFERNO = 'inferno'
-    PLASMA = 'plasma'
     VIRIDIS = 'viridis'
+    PLASMA = 'plasma'
+    INFERNO = 'inferno'
+    MAGMA = 'magma'
     CIVIDIS = 'cividis'
-    TURBO = 'turbo'
 
     # --- Sequential ---
+    GREYS = 'Greys'
+    PURPLES = 'Purples'
     BLUES = 'Blues'
     GREENS = 'Greens'
-    GREYS = 'Greys'
     ORANGES = 'Oranges'
-    PURPLES = 'Purples'
     REDS = 'Reds'
-    YlGn = 'YlGn'
-    YlOrRd = 'YlOrRd'
+    YL_OR_BR = 'YlOrBr'
+    YL_OR_RD = 'YlOrRd'
+    OR_RD = 'OrRd'
+    PU_RD = 'PuRd'
+    RD_PU = 'RdPu'
+    BU_PU = 'BuPu'
+    GN_BU = 'GnBu'
+    PU_BU = 'PuBu'
+    YL_GN_BU = 'YlGnBu'
+    PU_BU_GN = 'PuBuGn'
+    BU_GN = 'BuGn'
+    YL_GN = 'YlGn'
+
+    # --- Sequential (2) ---
+    BINARY = 'binary'
+    GIST_YARG = 'gist_yarg'
+    GIST_GRAY = 'gist_gray'
+    GRAY = 'gray'
+    BONE = 'bone'
+    PINK = 'pink'
+    SPRING = 'spring'
+    SUMMER = 'summer'
+    AUTUMN = 'autumn'
+    WINTER = 'winter'
+    COOL = 'cool'
+    WISTIA = 'Wistia'
+    HOT = 'hot'
+    AFMHOT = 'afmhot'
+    GIST_HEAT = 'gist_heat'
+    COPPER = 'copper'
 
     # --- Diverging ---
-    BRBG = 'BrBG'
-    PRGN = 'PRGn'
-    PIYG = 'PiYG'
-    PUOR = 'PuOr'
-    RDBU = 'RdBu'
-    RDGY = 'RdGy'
-    RDYLBU = 'RdYlBu'
-    RDYLGN = 'RdYlGn'
+    PI_YG = 'PiYG'
+    PR_GN = 'PRGn'
+    BR_BG = 'BrBG'
+    PU_OR = 'PuOr'
+    RD_GY = 'RdGy'
+    RD_BU = 'RdBu'
+    RD_YL_BU = 'RdYlBu'
+    RD_YL_GN = 'RdYlGn'
     SPECTRAL = 'Spectral'
     COOLWARM = 'coolwarm'
+    BWR = 'bwr'
     SEISMIC = 'seismic'
-
-    # --- Qualitative ---
-    ACCENT = 'Accent'
-    DARK2 = 'Dark2'
-    PAIRED = 'Paired'
-    PASTEL1 = 'Pastel1'
-    SET1 = 'Set1'
-    TAB10 = 'tab10'
-    TAB20 = 'tab20'
 
     # --- Cyclic ---
     TWILIGHT = 'twilight'
     TWILIGHT_SHIFTED = 'twilight_shifted'
+    HSV = 'hsv'
 
-    # --- Miscellaneous / Legacy ---
-    HOT = 'hot'
-    JET = 'jet'
-    RAINBOW = 'rainbow'
+    # --- Qualitative ---
+    PASTEL1 = 'Pastel1'
+    PASTEL2 = 'Pastel2'
+    PAIRED = 'Paired'
+    ACCENT = 'Accent'
+    DARK2 = 'Dark2'
+    SET1 = 'Set1'
+    SET2 = 'Set2'
+    SET3 = 'Set3'
+    TAB10 = 'tab10'
+    TAB20 = 'tab20'
+    TAB20B = 'tab20b'
+    TAB20C = 'tab20c'
+
+    # --- Miscellaneous ---
+    TURBO = 'turbo'
+    FLAG = 'flag'
+    PRISM = 'prism'
+    OCEAN = 'ocean'
+    GIST_EARTH = 'gist_earth'
     TERRAIN = 'terrain'
-    BINARY = 'binary'
-    BONE = 'bone'
-    COOL = 'cool'
-    COPPER = 'copper'
+    GIST_STERN = 'gist_stern'
+    GNUPLOT = 'gnuplot'
+    GNUPLOT2 = 'gnuplot2'
+    CMRMAP = 'CMRmap'
+    CUBEHELIX = 'cubehelix'
+    BRG = 'brg'
+    GIST_RAINBOW = 'gist_rainbow'
+    RAINBOW = 'rainbow'
+    JET = 'jet'
+    NIPY_SPECTRAL = 'nipy_spectral'
+    GIST_NCAR = 'gist_ncar'
 
     def is_reversed(self) -> bool:
         """
@@ -79,4 +122,17 @@ class ColorMap(Enum):
         Colormap
             The colormap object.
         """
-        return get_cmap(self.value)
+        # Using the modern 'colormaps' registry instead of the deprecated 'get_cmap'
+        return colormaps[self.value]
+
+    @property
+    def reversed_object(self) -> Colormap:
+        """
+        Get the reversed version of the colormap object.
+
+        Returns
+        -------
+        Colormap
+            The reversed colormap object.
+        """
+        return self.colormap_object.reversed()

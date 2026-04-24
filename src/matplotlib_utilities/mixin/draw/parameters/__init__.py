@@ -1,4 +1,4 @@
-from ...subparameter import Subparameters
+from ....subparameter import Subparameters
 from .annotate import AnnotateParameters
 from .arrow import ArrowParameters
 from .scatter import ScatterParameters
@@ -7,7 +7,7 @@ from .colorbar import ColorbarParameters
 from .plot import PlotParameters
 from .line import LineParameters
 from .legend import LegendParameters
-from ...utils import (
+from ....utils import (
     Aspect,
     ArrowShape,
     Linestyle,
@@ -18,7 +18,7 @@ from ...utils import (
     Orientation,
     ColorbarExtend,
     ColorbarSpacing,
-    )
+)
 
 __all__ = [
     "Subparameters",
@@ -40,4 +40,4 @@ __all__ = [
     "Orientation",
     "ColorbarExtend",
     "ColorbarSpacing",
-    ]
+]

@@ -2,28 +2,19 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
-from ..graph_axis import GraphAxis
-from ..utils import SubplotIndex
+from ...protocols import MakerCanvas
+from ...graph_axis import GraphAxis
+from ...utils import SubplotIndex
 from .parameters import TickParamsParameters
 
-if TYPE_CHECKING:
-    from ..maker import MatplotGraphMaker
 
-
-class AxisOps:
+class AxisMixin:
     """
-    Axis-related operations for :class:`MatplotGraphMaker`, exposed as maker.axis.
+    Axis-related operations for :class:`MatplotGraphMaker`.
     """
-
-    __slots__ = ("_maker",)
-
-    def __init__(self, maker: MatplotGraphMaker) -> None:
-        self._maker = maker
 
     def set_label(
-        self,
+        self: MakerCanvas,
         label: str,
         index: SubplotIndex,
         axis: GraphAxis,
@@ -42,10 +33,10 @@ class AxisOps:
         """
         row_index, column_index = index.tuple
         axis_attribute = axis.label_set_attribute
-        getattr(self._maker.ax[row_index, column_index], axis_attribute)(label)
+        getattr(self.ax[row_index, column_index], axis_attribute)(label)
 
     def set_lim(
-        self,
+        self: MakerCanvas,
         lower: float,
         upper: float,
         index: SubplotIndex,
@@ -65,12 +56,12 @@ class AxisOps:
         axis: GraphAxis
             The axis to set the limit on.
         """
-        subplot = self._maker.access_subplot(index=index)
+        subplot = self.access_subplot(index=index)
         attribute = axis.limit_set_attribute
         getattr(subplot, attribute)(lower, upper)
 
     def delete_axis_label(
-        self,
+        self: MakerCanvas,
         index: SubplotIndex,
         subparams: TickParamsParameters | None = None,
     ) -> None:
@@ -85,5 +76,5 @@ class AxisOps:
             The subparameters for the tick params.
         """
         subparams = subparams or TickParamsParameters()
-        subplot = self._maker.access_subplot(index=index)
+        subplot = self.access_subplot(index=index)
         subplot.tick_params(**subparams.to_dict)

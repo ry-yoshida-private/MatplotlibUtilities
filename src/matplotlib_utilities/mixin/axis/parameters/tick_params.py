@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ...subparameter import Subparameters
+from ....subparameter import Subparameters
 
 
 @dataclass
@@ -28,13 +28,10 @@ class TickParamsParameters(Subparameters):
         Whether to show tick labels on the top axis.
     """
 
-    # Control visibility of tick marks (the small lines on the axes)
     bottom: bool = False
     left: bool = False
     right: bool = False
     top: bool = False
-
-    # Control visibility of tick labels (the text values next to tick marks)
     labelbottom: bool = False
     labelleft: bool = False
     labelright: bool = False

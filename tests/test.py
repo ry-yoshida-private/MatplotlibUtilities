@@ -41,13 +41,13 @@ def build_demo_graph_maker() -> MatplotGraphMaker:
     index = graph_maker.get_subplot_index_from_number(number=0)
     # Per-point marker area (matplotlib *s*); map e.g. confidences to visible sizes.
     sizes = 20.0 + confidences * 80.0
-    graph_maker.draw.scatter(
+    graph_maker.scatter(
         index=index,
         x=x1,
         y=y1,
         subparams=ScatterParameters(s=sizes),
     )
-    graph_maker.draw.annotate(
+    graph_maker.annotate(
         text="mean",
         xy=(float(np.mean(x1)), float(np.mean(y1))),
         index=index,
@@ -63,19 +63,19 @@ def build_demo_graph_maker() -> MatplotGraphMaker:
         axis=GraphAxis.X,
     )
     index = graph_maker.get_subplot_index_from_number(number=1)
-    graph_maker.draw.plot(
+    graph_maker.plot(
         index=index,
         x=x1,
         y=y1,
         subparams=None,
     )
-    graph_maker.draw.line(
+    graph_maker.line(
         value=0.5,
         orientation=Orientation.VERTICAL,
         index=graph_maker.get_subplot_index_from_number(number=1),
         subparams=LineParameters(color="red"),
     )
-    graph_maker.draw.line(
+    graph_maker.line(
         value=0.0,
         orientation=Orientation.HORIZONTAL,
         index=graph_maker.get_subplot_index_from_number(number=1),
@@ -89,6 +89,11 @@ def test_import_package() -> None:
 
     assert hasattr(mu, "MatplotGraphMaker")
     assert hasattr(mu, "AnnotateParameters")
+
+
+def test_scatter_parameters_label_in_to_dict() -> None:
+    """Scatter includes matplotlib ``label`` in ``to_dict`` like ``Axes.scatter``."""
+    assert ScatterParameters(label="series A").to_dict["label"] == "series A"
 
 
 def test_graph_maker_demo_smoke(tmp_path: Path) -> None:

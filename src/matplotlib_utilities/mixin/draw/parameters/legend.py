@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from ...utils.color import MplColor
-from ...subparameter import Subparameters
+from ....subparameter import Subparameters
+from ....utils.color import MplColor
 
 
 @dataclass
@@ -12,7 +12,7 @@ class LegendParameters(Subparameters):
     Attributes:
     ----------
     loc: str | None
-        The location of the legend (e.g. 'upper right', 'best').
+        The location of the legend.
     bbox_to_anchor: tuple | None
         Box that is used to position the legend in conjunction with loc.
     ncol: int | None
@@ -20,21 +20,21 @@ class LegendParameters(Subparameters):
     fontsize: int | str | None
         The font size of the legend.
     frameon: bool | None
-        Whether the legend should be drawn on a patch (frame).
+        Whether the legend should be drawn on a frame.
     fancybox: bool | None
-        Whether round edges should be enabled around the legend's background.
+        Whether round edges should be enabled around the legend background.
     shadow: bool | None
         Whether to draw a shadow behind the legend.
     framealpha: float | None
-        The alpha transparency of the legend's background.
+        The alpha transparency of the legend background.
     facecolor: MplColor | None
-        The legend's background color.
+        The legend background color.
     edgecolor: MplColor | None
-        The legend's background patch edge color.
+        The legend frame edge color.
     title: str | None
-        The legend's title.
+        The legend title.
     title_fontsize: int | str | None
-        The font size of the legend's title.
+        The font size of the legend title.
     """
 
     loc: str | None = None

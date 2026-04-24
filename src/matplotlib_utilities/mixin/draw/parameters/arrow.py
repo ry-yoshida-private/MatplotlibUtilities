@@ -1,22 +1,14 @@
 from dataclasses import dataclass
 
-from ...utils import ArrowShape
-from ...utils.color import MplColor
-from .base import LineStyleParameters
+from ....subparameter import Subparameters
+from ....utils import ArrowShape, MplColor
+from .base import ArtistParameters, LabelParameters, LineStyleParameters
 
 
 @dataclass
-class ArrowParameters(LineStyleParameters):
+class ArrowParameters(LineStyleParameters, LabelParameters, ArtistParameters, Subparameters):
     """
-    Optional keyword arguments for :meth:`matplotlib.axes.Axes.arrow`.
-
-    x, y, dx, and dy are passed positionally from :meth:`Draw.arrow`;
-    this dataclass holds the remaining parameters described in the matplotlib docs
-    (patch styling and arrow geometry).
-
-    Inherits alpha and zorder from :class:`~.base.artist.ArtistParameters`, and
-    color, linewidth, linestyle, label, and antialiased from
-    :class:`~.base.line.LineStyleParameters`.
+    Optional keyword arguments for matplotlib.axes.Axes.arrow.
 
     Attributes:
     ----------
@@ -49,12 +41,11 @@ class ArrowParameters(LineStyleParameters):
     shape: ArrowShape | None = None
     overhang: float | None = None
     head_starts_at_zero: bool | None = None
-
     edgecolor: MplColor | None = None
     facecolor: MplColor | None = None
     fill: bool | None = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """
         Validate parameters after initialization.
         """

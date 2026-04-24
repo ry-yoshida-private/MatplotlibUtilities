@@ -31,11 +31,15 @@ from matplotlib_utilities import (
     GraphParameters, 
     MatplotGraphMaker,
     PlotParameters,
-    ScatterParameters
+    ScatterParameters,
+    LegendParameters,
+    GraphAxis,
 )
 
 layout = GraphLayout.from_row_column(row=1, column=2)
-maker = MatplotGraphMaker(layout=layout, parameters=GraphParameters())
+legend_params = LegendParameters(edgecolor="black")
+graph_params = GraphParameters(figsize=(8, 1.5))
+maker = MatplotGraphMaker(layout=layout, parameters=graph_params)
 
 x = np.linspace(0, 1, 50)
 y = np.sin(x * 10)
@@ -43,9 +47,11 @@ z = np.cos(x * 10)
 
 idx0 = maker.get_subplot_index_from_number(number=0)
 idx1 = maker.get_subplot_index_from_number(number=1)
-maker.draw.plot(index=idx0, x=x, y=y, subparams=PlotParameters())
-# Third quantity as color (matplotlib ``c``) on a 2D scatter.
-maker.draw.scatter(index=idx1, x=x, y=y, subparams=ScatterParameters(c=z, cmap="viridis"))
+maker.plot(index=idx0, x=x, y=y, subparams=PlotParameters())
+maker.scatter(index=idx1, x=x, y=y, subparams=ScatterParameters(c=z, cmap="viridis", label="sin"))
+maker.set_label(label="x", index=idx0, axis=GraphAxis.X)
+maker.set_label(label="y", index=idx0, axis=GraphAxis.Y)
+maker.legend(index=idx1, subparams=legend_params)
 maker.finalize(is_showing_result_enabled=True)
 ```
 

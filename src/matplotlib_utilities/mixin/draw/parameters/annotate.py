@@ -1,18 +1,15 @@
 from dataclasses import dataclass
 from typing import Any
 
-
-from ...utils.color import MplColor
+from ....subparameter import Subparameters
+from ....utils.color import MplColor
 from .base import ArtistParameters
 
 
 @dataclass
-class AnnotateParameters(ArtistParameters):
+class AnnotateParameters(ArtistParameters, Subparameters):
     """
-    Optional keyword arguments for :meth:`matplotlib.axes.Axes.annotate`.
-
-    text, xy, and xytext are passed positionally or explicitly from :meth:`Draw.annotate`;
-    this dataclass holds the coordinate system, arrow properties, and text styling.
+    Optional keyword arguments for matplotlib.axes.Axes.annotate.
 
     Attributes:
     ----------
@@ -21,9 +18,9 @@ class AnnotateParameters(ArtistParameters):
     textcoords: str | Any | None
         The coordinate system that xytext is given in.
     arrowprops: dict[str, Any] | None
-        The properties used to draw a FancyArrowPatch arrow between the positions.
+        Arrow properties between annotation point and text.
     annotation_clip: bool | None
-        Whether to clip the annotation when it is outside the axes area.
+        Whether to clip the annotation outside the axes area.
     color: MplColor | None
         The color of the text.
     fontsize: float | str | None
@@ -37,22 +34,19 @@ class AnnotateParameters(ArtistParameters):
     alpha: float | None
         The alpha of the text and arrow.
     rotation: float | str | None
-        The rotation of the text in degrees.
+        The rotation of the text.
     rotation_mode: str | None
-        The rotation mode of the text ('default' or 'anchor').
+        The rotation mode of the text.
     zorder: float | None
         The order of the annotation.
     visible: bool | None
         Whether the annotation is visible.
     """
 
-    # Annotation specific
     xycoords: str | Any | None = None
     textcoords: str | Any | None = None
     arrowprops: dict[str, Any] | None = None
     annotation_clip: bool | None = None
-
-    # Text styling
     color: MplColor | None = None
     fontsize: float | str | None = None
     fontweight: str | int | None = None
