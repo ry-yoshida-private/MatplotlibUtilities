@@ -1,7 +1,10 @@
 from __future__ import annotations
 from abc import ABC
 from dataclasses import dataclass, replace, Field, fields
-from typing import Any
+from typing import Any, TypeVar
+
+
+_SubparametersT = TypeVar("_SubparametersT", bound="Subparameters")
 
 
 @dataclass
@@ -21,7 +24,7 @@ class Subparameters(ABC):
         """When True, the field is omitted from the dict returned by to_dict."""
         return value is None
 
-    def rebuild(self, **changes: Any) -> Subparameters:
+    def rebuild(self: _SubparametersT, **changes: Any) -> _SubparametersT:
         """
         Return a new instance with selected field values replaced.
 
