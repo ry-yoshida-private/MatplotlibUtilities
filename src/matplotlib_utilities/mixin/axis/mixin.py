@@ -31,9 +31,9 @@ class AxisMixin:
         axis: GraphAxis
             The axis to set the label on.
         """
-        row_index, column_index = index.tuple
+        subplot = self.access_subplot(index=index)
         axis_attribute = axis.label_set_attribute
-        getattr(self.ax[row_index, column_index], axis_attribute)(label)
+        getattr(subplot, axis_attribute)(label)
 
     def set_lim(
         self: MakerCanvas,
